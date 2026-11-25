@@ -1,0 +1,424 @@
+/* =========================================================
+   BURRO – Italian Bakery · Landing page
+   Palette taken from the logo and menu
+   ========================================================= */
+
+:root {
+  --mustard: #EDBC33;
+  --mustard-deep: #C99A1C;
+  --green: #1B532C;
+  --green-deep: #133D20;
+  --cream: #EDE2B5;
+  --cream-light: #F6EFD3;
+  --ink: #1B532C;
+
+  --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+
+  --radius: 18px;
+  --ease: cubic-bezier(.22, .8, .3, 1);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  background-color: var(--cream);
+  /* Subtle paper grain + soft warm vignette */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42  0 0 0 0 .33  0 0 0 0 .12  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 30%, var(--cream-light) 0%, var(--cream) 55%, #E4D6A0 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Awning strip ---------- */
+.awning {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 22px;
+  z-index: 2;
+  background: repeating-linear-gradient(90deg,
+      var(--green) 0 22px,
+      var(--cream-light) 22px 44px);
+  /* scalloped lower edge */
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% 11px no-repeat,
+    radial-gradient(circle 11px at 11px 11px, #000 98%, transparent) 0 0 / 22px 22px repeat-x;
+  mask:
+    linear-gradient(#000 0 0) top / 100% 11px no-repeat,
+    radial-gradient(circle 11px at 11px 11px, #000 98%, transparent) 0 0 / 22px 22px repeat-x;
+  filter: drop-shadow(0 2px 2px rgba(27, 83, 44, .15));
+}
+
+/* ---------- Decorative doodles ---------- */
+.doodles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.doodle {
+  position: absolute;
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .16;
+}
+
+.doodle--croissant { width: 130px; top: 7%;  left: -34px;  transform: rotate(-18deg); }
+.doodle--loaf      { width: 120px; top: 30%; right: -40px; transform: rotate(14deg); }
+.doodle--roll      { width: 92px;  bottom: 13%; left: -26px; }
+.doodle--wheat     { width: 48px;  top: 4%;  right: 12px; transform: rotate(18deg); opacity: .2; stroke: var(--mustard-deep); }
+.doodle--cup       { width: 90px;  bottom: 3%; right: -12px; transform: rotate(-8deg); }
+
+/* ---------- Layout ---------- */
+.page {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px 22px 12px;
+}
+
+/* ---------- Brand ---------- */
+.brand {
+  text-align: center;
+  animation: rise .8s var(--ease) both;
+}
+
+.brand__logo {
+  display: block;
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 4px var(--cream-light),
+    0 0 0 5px rgba(27, 83, 44, .25),
+    0 10px 24px -10px rgba(19, 61, 32, .45);
+}
+
+.brand__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  padding-left: .38em; /* optically balance letter-spacing */
+}
+
+.brand__kicker::before,
+.brand__kicker::after {
+  content: "";
+  width: 22px;
+  height: 1.5px;
+  background: var(--mustard-deep);
+}
+
+.brand__name {
+  margin: 10px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(4rem, 21vw, 5.4rem);
+  line-height: .9;
+  letter-spacing: .05em;
+  color: var(--green);
+  text-shadow: 3px 3px 0 var(--mustard);
+}
+
+.brand__slogan {
+  max-width: 300px;
+  margin: 16px auto 0;
+  text-wrap: balance;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.06rem;
+  line-height: 1.4;
+  color: var(--green);
+  opacity: .88;
+}
+
+/* ---------- Ornament ---------- */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0 22px;
+  animation: rise .8s .1s var(--ease) both;
+}
+
+.ornament span {
+  width: 54px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(27, 83, 44, .45));
+}
+
+.ornament span:last-child {
+  background: linear-gradient(90deg, rgba(27, 83, 44, .45), transparent);
+}
+
+.ornament svg {
+  width: 26px;
+  fill: var(--mustard);
+  stroke: var(--green);
+  stroke-width: 1;
+}
+
+/* ---------- Buttons ---------- */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 10px 16px 10px 10px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 1.04rem;
+  letter-spacing: .01em;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform .28s var(--ease),
+    box-shadow .28s var(--ease),
+    background-color .28s var(--ease);
+  animation: rise .8s var(--ease) both;
+}
+
+.btn:nth-child(1) { animation-delay: .16s; }
+.btn:nth-child(2) { animation-delay: .24s; }
+.btn:nth-child(3) { animation-delay: .32s; }
+
+.btn__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+}
+
+.btn__icon svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.btn__label { flex: 1; line-height: 1.2; }
+
+.btn__arrow svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .7;
+  transition: transform .28s var(--ease), opacity .28s;
+}
+
+/* Secondary buttons: cream paper */
+.btn--menu,
+.btn--insta {
+  color: var(--green);
+  background: var(--cream-light);
+  border: 1.5px solid rgba(27, 83, 44, .22);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .7) inset,
+    0 6px 14px -8px rgba(19, 61, 32, .35);
+}
+
+.btn--menu .btn__icon,
+.btn--insta .btn__icon {
+  color: var(--green);
+  background: var(--mustard);
+}
+
+.btn--insta .dot { fill: currentColor; stroke: none; }
+
+/* Primary button: Google review */
+.btn--google {
+  min-height: 74px;
+  color: var(--cream-light);
+  background: var(--green);
+  border: 1.5px solid var(--green-deep);
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow:
+    0 0 0 4px rgba(237, 188, 51, .35),
+    0 14px 26px -12px rgba(19, 61, 32, .7);
+}
+
+.btn--google .btn__icon {
+  width: 50px;
+  height: 50px;
+  background: var(--cream-light);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--mustard);
+}
+
+.btn--google .btn__icon svg.star-icon {
+  width: 25px;
+  height: 25px;
+  color: var(--green);
+  fill: var(--mustard);
+  stroke-width: 1.6;
+}
+
+.btn--google .btn__arrow { color: var(--mustard); }
+
+.stars {
+  display: block;
+  margin-top: 5px;
+}
+
+.stars svg {
+  display: block;
+  width: 78px;
+  height: 14px;
+  fill: var(--mustard);
+}
+
+/* Interactions */
+@media (hover: hover) {
+  .btn:hover { transform: translateY(-2px); }
+  .btn:hover .btn__arrow svg { transform: translate(2px, -2px); opacity: 1; }
+  .btn--menu:hover,
+  .btn--insta:hover {
+    background: #FBF6E2;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, .7) inset,
+      0 12px 22px -10px rgba(19, 61, 32, .4);
+  }
+  .btn--google:hover {
+    background: #20603A;
+    box-shadow:
+      0 0 0 5px rgba(237, 188, 51, .5),
+      0 18px 30px -12px rgba(19, 61, 32, .75);
+  }
+}
+
+.btn:active {
+  transform: scale(.975);
+  transition-duration: .1s;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--mustard-deep);
+  outline-offset: 3px;
+}
+
+/* ---------- Location ---------- */
+.location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 22px 0 0;
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  animation: rise .8s .4s var(--ease) both;
+}
+
+.location svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--mustard-deep);
+  stroke-width: 1.9;
+}
+
+/* ---------- Footer signature ---------- */
+.signature {
+  position: relative;
+  z-index: 1;
+  padding: 14px 20px calc(18px + env(safe-area-inset-bottom));
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: .78rem;
+  color: var(--green);
+  opacity: .6;
+  text-align: center;
+}
+
+/* ---------- Motion ---------- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------- Small / short phones ---------- */
+@media (max-height: 700px) {
+  .page { padding-top: 36px; }
+  .brand__logo { width: 70px; height: 70px; margin-bottom: 10px; }
+  .brand__name { margin-top: 8px; font-size: clamp(3.4rem, 18vw, 4.4rem); }
+  .brand__slogan { margin-top: 12px; font-size: 1rem; }
+  .ornament { margin: 14px 0 16px; }
+  .btn { min-height: 58px; }
+  .btn--google { min-height: 68px; }
+  .location { margin-top: 16px; }
+}
+
+/* Keep the loaf clear of the brand name on phones */
+@media (max-width: 767px) {
+  .doodle--loaf { display: none; }
+}
+
+/* ---------- Larger screens ---------- */
+@media (min-width: 768px) {
+  .page { padding-top: 64px; }
+  .doodle { opacity: .2; }
+  .doodle--croissant { width: 220px; left: 6%;  top: 14%; }
+  .doodle--loaf      { width: 200px; right: 7%; top: 22%; }
+  .doodle--roll      { width: 150px; left: 11%; bottom: 16%; }
+  .doodle--wheat     { width: 70px;  right: 18%; top: 8%; }
+  .doodle--cup       { width: 150px; right: 10%; bottom: 10%; }
+}
